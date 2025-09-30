@@ -1,0 +1,8 @@
+{
+    "email": "leader@example.com",
+    "password": "password123",
+    "userrole": "leader",
+    "name": "Leader User",
+    "rank": "Leader",
+    "crew": "Kingfishers"
+}

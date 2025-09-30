@@ -1,0 +1,1 @@
+ALTER TABLE public.scout_badges ADD COLUMN physically_obtained BOOLEAN DEFAULT FALSE;

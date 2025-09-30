@@ -1,0 +1,237 @@
+﻿
+
+uri_allow_list                                    : http://localhost:5173/com
+                                                    plete-registration,http:/
+                                                    /localhost:5173/
+jwt_exp                                           : 3600
+api_max_request_duration                          : 10
+db_max_pool_size                                  : 
+disable_signup                                    : False
+security_manual_linking_enabled                   : False
+security_update_password_require_reauthentication : False
+refresh_token_rotation_enabled                    : True
+security_refresh_token_reuse_interval             : 10
+site_url                                          : http://localhost:5173
+mfa_max_enrolled_factors                          : 10
+mfa_allow_low_aal                                 : True
+rate_limit_anonymous_users                        : 30
+rate_limit_sms_sent                               : 30
+rate_limit_verify                                 : 80
+rate_limit_token_refresh                          : 200
+rate_limit_otp                                    : 90
+audit_log_disable_postgres                        : False
+sessions_timebox                                  : 0
+sessions_inactivity_timeout                       : 0
+sessions_single_per_user                          : False
+sessions_tags                                     : 
+hook_custom_access_token_enabled                  : False
+hook_custom_access_token_uri                      : 
+hook_custom_access_token_secrets                  : 
+hook_before_user_created_enabled                  : False
+hook_before_user_created_uri                      : 
+hook_before_user_created_secrets                  : 
+nimbus_oauth_client_id                            : 
+nimbus_oauth_client_secret                        : 
+external_anonymous_users_enabled                  : False
+external_apple_additional_client_ids              : 
+external_apple_client_id                          : 
+external_apple_enabled                            : False
+external_apple_secret                             : 
+external_azure_client_id                          : 
+external_azure_enabled                            : False
+external_azure_secret                             : 
+external_azure_url                                : 
+external_bitbucket_client_id                      : 
+external_bitbucket_enabled                        : False
+external_bitbucket_secret                         : 
+external_discord_client_id                        : 
+external_discord_enabled                          : False
+external_discord_secret                           : 
+external_email_enabled                            : True
+external_facebook_client_id                       : 
+external_facebook_enabled                         : False
+external_facebook_secret                          : 
+external_figma_client_id                          : 
+external_figma_enabled                            : False
+external_figma_secret                             : 
+external_github_client_id                         : 
+external_github_enabled                           : False
+external_github_secret                            : 
+external_gitlab_client_id                         : 
+external_gitlab_enabled                           : False
+external_gitlab_secret                            : 
+external_gitlab_url                               : 
+external_google_additional_client_ids             : 
+external_google_client_id                         : 
+external_google_enabled                           : False
+external_google_secret                            : 
+external_google_skip_nonce_check                  : 
+external_kakao_client_id                          : 
+external_kakao_enabled                            : False
+external_kakao_secret                             : 
+external_keycloak_client_id                       : 
+external_keycloak_enabled                         : False
+external_keycloak_secret                          : 
+external_keycloak_url                             : 
+external_linkedin_oidc_client_id                  : 
+external_linkedin_oidc_enabled                    : False
+external_linkedin_oidc_secret                     : 
+external_slack_oidc_client_id                     : 
+external_slack_oidc_enabled                       : False
+external_slack_oidc_secret                        : 
+external_notion_client_id                         : 
+external_notion_enabled                           : False
+external_notion_secret                            : 
+external_phone_enabled                            : False
+external_slack_client_id                          : 
+external_slack_enabled                            : False
+external_slack_secret                             : 
+external_spotify_client_id                        : 
+external_spotify_enabled                          : False
+external_spotify_secret                           : 
+external_twitch_client_id                         : 
+external_twitch_enabled                           : False
+external_twitch_secret                            : 
+external_twitter_client_id                        : 
+external_twitter_enabled                          : False
+external_twitter_secret                           : 
+external_web3_solana_enabled                      : False
+external_web3_ethereum_enabled                    : False
+external_workos_client_id                         : 
+external_workos_enabled                           : False
+external_workos_secret                            : 
+external_workos_url                               : 
+external_zoom_client_id                           : 
+external_zoom_enabled                             : False
+external_zoom_secret                              : 
+hook_mfa_verification_attempt_enabled             : False
+hook_mfa_verification_attempt_uri                 : 
+hook_mfa_verification_attempt_secrets             : 
+hook_password_verification_attempt_enabled        : False
+hook_password_verification_attempt_uri            : 
+hook_password_verification_attempt_secrets        : 
+hook_send_sms_enabled                             : False
+hook_send_sms_uri                                 : 
+hook_send_sms_secrets                             : 
+hook_send_email_enabled                           : False
+hook_send_email_uri                               : 
+hook_send_email_secrets                           : 
+mailer_allow_unverified_email_sign_ins            : False
+mailer_autoconfirm                                : False
+mailer_otp_exp                                    : 3600
+mailer_otp_length                                 : 6
+mailer_secure_email_change_enabled                : True
+mailer_subjects_confirmation                      : Confirm Your Signup
+mailer_subjects_email_change                      : Confirm Email Change
+mailer_subjects_invite                            : You have been invited
+mailer_subjects_magic_link                        : Your Magic Link
+mailer_subjects_reauthentication                  : Confirm Reauthentication
+mailer_subjects_recovery                          : Reset Your Password
+mailer_templates_confirmation_content             : <h2>You have been 
+                                                    invited</h2>
+                                                    <p>You have been invited 
+                                                    to create a user on {{ 
+                                                    .SiteURL }}. Follow this 
+                                                    link to accept the 
+                                                    invite:</p>
+                                                    <p>
+                                                      <a href="{{ 
+                                                    .RedirectTo }}/auth/confi
+                                                    rm?token_hash={{ 
+                                                    .TokenHash 
+                                                    }}&type=invite">Confirm 
+                                                    your email</a>
+mailer_templates_email_change_content             : <h2>Confirm Change of 
+                                                    Email</h2>
+                                                    
+                                                    <p>Follow this link to 
+                                                    confirm the update of 
+                                                    your email from {{ 
+                                                    .Email }} to {{ 
+                                                    .NewEmail }}:</p>
+                                                    <p><a href="{{ 
+                                                    .ConfirmationURL 
+                                                    }}">Change Email</a></p>
+mailer_templates_invite_content                   : <p>Follow this link to 
+                                                    confirm your user:</p>
+                                                    <p><a href="{{ .SiteURL }
+                                                    }/auth/confirm?token_hash
+                                                    ={{ .TokenHash 
+                                                    }}&type=invite">Confirm 
+                                                    your email</a></p>
+mailer_templates_magic_link_content               : <h2>Magic Link</h2>
+                                                    
+                                                    <p>Follow this link to 
+                                                    login:</p>
+                                                    <p><a href="{{ 
+                                                    .ConfirmationURL }}">Log 
+                                                    In</a></p>
+mailer_templates_reauthentication_content         : <h2>Confirm 
+                                                    reauthentication</h2>
+                                                    
+                                                    <p>Enter the code: {{ 
+                                                    .Token }}</p>
+mailer_templates_recovery_content                 : <h2>Reset Password</h2>
+                                                    
+                                                    <p>Follow this link to 
+                                                    reset the password for 
+                                                    your user:</p>
+                                                    <p><a href="{{ 
+                                                    .ConfirmationURL 
+                                                    }}">Reset 
+                                                    Password</a></p>
+mfa_totp_enroll_enabled                           : True
+mfa_totp_verify_enabled                           : True
+mfa_phone_enroll_enabled                          : False
+mfa_phone_verify_enabled                          : False
+mfa_phone_template                                : Your code is {{ .Code }}
+mfa_phone_otp_length                              : 6
+mfa_phone_max_frequency                           : 5
+mfa_web_authn_enroll_enabled                      : False
+mfa_web_authn_verify_enabled                      : False
+password_hibp_enabled                             : False
+password_min_length                               : 6
+password_required_characters                      : 
+rate_limit_email_sent                             : 200
+rate_limit_web3                                   : 30
+saml_allow_encrypted_assertions                   : False
+saml_enabled                                      : False
+saml_external_url                                 : 
+security_captcha_enabled                          : False
+security_captcha_provider                         : hcaptcha
+security_captcha_secret                           : 
+sms_autoconfirm                                   : False
+sms_max_frequency                                 : 5
+sms_messagebird_access_key                        : 
+sms_messagebird_originator                        : 
+sms_otp_exp                                       : 60
+sms_otp_length                                    : 6
+sms_provider                                      : twilio
+sms_template                                      : Your code is {{ .Code }}
+sms_test_otp                                      : 
+sms_test_otp_valid_until                          : 
+sms_textlocal_api_key                             : 
+sms_textlocal_sender                              : 
+sms_twilio_account_sid                            : 
+sms_twilio_auth_token                             : 
+sms_twilio_content_sid                            : 
+sms_twilio_message_service_sid                    : 
+sms_twilio_verify_account_sid                     : 
+sms_twilio_verify_auth_token                      : 
+sms_twilio_verify_message_service_sid             : 
+sms_vonage_api_key                                : 
+sms_vonage_api_secret                             : 
+sms_vonage_from                                   : 
+smtp_admin_email                                  : jeanmichelwilliams3@gmail
+                                                    .com
+smtp_host                                         : smtp-relay.brevo.com
+smtp_max_frequency                                : 1
+smtp_pass                                         : 3f0d26ecafe3c9f1d25f94c42
+                                                    3345d2329b9be55a83836df5b
+                                                    e5bb5416203f3f
+smtp_port                                         : 587
+smtp_sender_name                                  : ScoutLink
+smtp_user                                         : 96728d001@smtp-brevo.com
+
+
+

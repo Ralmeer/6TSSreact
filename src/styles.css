@@ -1,0 +1,307 @@
+/* Basic Reset & Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+/* Container for overall layout */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header Styles */
+.app-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.app-header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.app-header nav li {
+    margin-left: 1.5rem;
+}
+
+.app-header nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.app-header nav a:hover {
+    color: #1abc9c;
+}
+
+/* Main Content Area */
+.main-content {
+    flex-grow: 1;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+}
+
+/* Card/Paper like styles for forms and content blocks */
+.card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.card h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    border-color: #1abc9c;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(26, 188, 156, 0.2);
+}
+
+/* Button Styles */
+.button {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #2980b9;
+}
+
+.button-link {
+    background: none;
+    border: none;
+    color: #3498db;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    display: block;
+    text-align: center;
+}
+
+.button-link:hover {
+    text-decoration: underline;
+}
+
+/* Alert/Message Styles */
+.success-message {
+    color: green;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.p-1 {
+    padding: 1rem;
+}
+
+.w-full {
+    width: 100%;
+}
+
+/* Specific styles for App.jsx layout */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 1.5rem;
+    color: #2c3e50;
+}
+
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 2rem;
+}
+
+.login-paper {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-paper h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+.app-navbar {
+    background-color: #ecf0f1;
+    padding: 1rem;
+    width: 200px; /* Adjust as needed */
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.app-navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.app-navbar li {
+    margin-bottom: 0.5rem;
+}
+
+.app-navbar a {
+    text-decoration: none;
+    color: #2c3e50;
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.app-navbar a:hover {
+    background-color: #bdc3c7;
+}
+
+.app-content-area {
+    flex-grow: 1;
+    padding: 2rem;
+}
+
+.app-logo {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.app-title {
+    display: flex;
+    align-items: center;
+}
+
+.app-title h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.app-header-group {
+    display: flex;
+    align-items: center;
+}
+
+.app-header-group .button {
+    margin-left: 1rem;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+}
+
+.app-burger-menu {
+    display: none; /* Hidden by default, show on smaller screens */
+}
+
+@media (max-width: 768px) {
+    .app-navbar {
+        display: none; /* Hide sidebar on small screens */
+    }
+
+    .app-burger-menu {
+        display: block; /* Show burger menu icon */
+    }
+
+    .app-header nav {
+        display: none; /* Hide main nav links */
+    }
+
+    .app-header {
+        padding: 1rem;
+    }
+
+    .app-title h1 {
+        font-size: 1.5rem;
+    }
+
+    .main-content {
+        padding: 1rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+}

@@ -1,0 +1,3 @@
+-- This file previously contained the definition for the handle_new_user function and the on_auth_user_created trigger.
+-- These have been removed to prevent conflicts with the Cloudflare Worker, which now handles scout creation.
+-- The Cloudflare Worker calls the create_scout_if_not_exists function to manage scout records.
