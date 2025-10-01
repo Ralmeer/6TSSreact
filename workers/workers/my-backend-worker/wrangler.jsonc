@@ -13,7 +13,7 @@
 	"vars": {
 		"SUPABASE_URL": "https://zthwgievqabwyrwozepi.supabase.co",
 		"SUPABASE_SERVICE_ROLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0aHdnaWV2cWFid3lyd296ZXBpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzA5MDA0OCwiZXhwIjoyMDcyNjY2MDQ4fQ.aJ061XTVZZw0-Rt4U5wKnQujGC33GbDSo9JCGPPjvaY",
-		"FRONTEND_URL": ""
+		"FRONTEND_URL": "https://tobattendance.pages.dev/"
 	},
 	"observability": {
 		"enabled": true

@@ -356,3 +356,12 @@ entrypoint = "./functions/get-all-activity-types/index.ts"
 # Specifies static files to be bundled with the function. Supports glob patterns.
 # For example, if you want to serve static HTML pages in your function:
 # static_files = [ "./functions/get-unique-activity-types/*.html" ]
+
+[functions.my-backend-worker]
+enabled = true
+verify_jwt = false
+import_map = "../workers/workers/my-backend-worker/deno.json"
+entrypoint = "../workers/workers/my-backend-worker/src/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/get-unique-activity-types/*.html" ]

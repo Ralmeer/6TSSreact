@@ -39,6 +39,11 @@ export default {
 		const origin = request.headers.get('Origin');
 		const allowedMethods = 'GET, POST, PUT, DELETE, OPTIONS';
 		const allowedHeaders = request.headers.get('Access-Control-Request-Headers') || 'Content-Type, Authorization';
+		let frontendUrl = env.FRONTEND_URL || '*';
+		if (frontendUrl !== '*') {
+			frontendUrl = frontendUrl.endsWith('/') ? frontendUrl.slice(0, -1) : frontendUrl;
+		}
+		console.log('Worker FRONTEND_URL (after processing):', frontendUrl); // New debugging line
 
 		const handleCors = (response: Response) => {
 			const corsHeaders: HeadersInit = {
@@ -49,7 +54,12 @@ export default {
 				'Vary': 'Origin',
 			};
 
-			(corsHeaders as Record<string, string>)['Access-Control-Allow-Origin'] = env.FRONTEND_URL || '*';
+			// Dynamically set Access-Control-Allow-Origin based on request Origin if it matches frontendUrl
+			if (origin && (frontendUrl === '*' || origin === frontendUrl)) {
+				(corsHeaders as Record<string, string>)['Access-Control-Allow-Origin'] = origin;
+			} else {
+				(corsHeaders as Record<string, string>)['Access-Control-Allow-Origin'] = frontendUrl;
+			}
 
 			for (const [key, value] of Object.entries(corsHeaders)) {
 				response.headers.set(key, value);
@@ -59,12 +69,20 @@ export default {
 
 		// Handle CORS preflight requests
 		if (request.method === 'OPTIONS') {
+			console.log('Worker FRONTEND_URL (OPTIONS):', frontendUrl); // Debugging line
 			const preflightHeaders: HeadersInit = {
-				'Access-Control-Allow-Origin': env.FRONTEND_URL || '*', // Allow all origins for preflight
 				'Access-Control-Allow-Methods': allowedMethods,
 				'Access-Control-Allow-Headers': allowedHeaders,
 				'Access-Control-Max-Age': '86400', // Cache preflight response for 24 hours
 			};
+
+			// Dynamically set Access-Control-Allow-Origin for preflight requests
+			if (origin && (frontendUrl === '*' || origin === frontendUrl)) {
+				(preflightHeaders as Record<string, string>)['Access-Control-Allow-Origin'] = origin;
+			} else {
+				(preflightHeaders as Record<string, string>)['Access-Control-Allow-Origin'] = frontendUrl;
+			}
+
 			return new Response(null, { status: 204, headers: preflightHeaders });
 		}
 
@@ -74,8 +92,12 @@ export default {
 			const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
 			try {
 				const newScoutData = await request.json();
+				console.log('Request body parsed:', newScoutData);
 				const { email, user_metadata } = newScoutData;
+				console.log('newScoutData:', newScoutData); // Added for debugging
+				console.log('user_metadata:', user_metadata); // Added for debugging
 				const { userrole, name, rank, crew } = user_metadata || {};
+				console.log('Extracted userrole:', userrole); // Added for debugging
 				const full_name = name || email;
 
 				console.log('Attempting to add scout with email:', email);
@@ -103,23 +125,59 @@ export default {
 					const userId = userResponse.user.id;
 					console.log('User created in Auth with ID:', userId);
 
-					// Generate a password reset link for the newly created user
-					const { data: passwordResetLinkData, error: generateLinkError } = await supabase.auth.admin.generateLink({
-						type: 'magiclink',
-						email: email,
-						options: {
-							referenceId: userId,
-							redirectTo: `${env.FRONTEND_URL}/complete-registration`,
-						},
+					// Insert the new scout into the 'scouts' table
+					console.log('Attempting to insert scout into scouts table...');
+					const { data: scoutInsertData, error: scoutInsertError } = await supabase
+						.from('scouts')
+						.insert([
+							{
+								user_id: userId,
+								email: email,
+								full_name: name,
+								rank: rank,
+								crew: crew,
+							}
+						]);
+
+					if (scoutInsertError) {
+						console.error('Error inserting scout into scouts table:', scoutInsertError);
+						// Optionally, you might want to delete the user from auth if scout insertion fails
+						return handleCors(new Response(JSON.stringify({ error: 'Failed to add scout to database.' }), { status: 500, headers: { 'Content-Type': 'application/json' } }));
+					}
+					console.log('Scout inserted into scouts table.');
+
+					// Insert the user's role into the 'userroles' table
+					console.log('Attempting to insert user role into userroles table...');
+					const { error: userRoleInsertError } = await supabase
+						.from('userroles')
+						.insert([
+							{
+								user_id: userId,
+								userrole: userrole,
+							}
+						]);
+
+					if (userRoleInsertError) {
+						console.error('Error inserting user role into userroles table:', userRoleInsertError);
+						return handleCors(new Response(JSON.stringify({ error: 'Failed to assign user role.' }), { status: 500, headers: { 'Content-Type': 'application/json' } }));
+					}
+					console.log('User role inserted into userroles table.');
+
+					// Request Supabase to send a password reset email for the newly created user
+					console.log('Attempting to request password reset email...');
+					console.log('FRONTEND_URL used for redirectTo:', env.FRONTEND_URL);
+					const cleanedFrontendUrl = env.FRONTEND_URL.endsWith('/') ? env.FRONTEND_URL.slice(0, -1) : env.FRONTEND_URL;
+					console.log('Cleaned FRONTEND_URL for redirectTo:', cleanedFrontendUrl); // Added for debugging
+					const { error: resetPasswordError } = await supabase.auth.resetPasswordForEmail(email, {
+						redirectTo: `${cleanedFrontendUrl}/update-password`,
 					});
 
-					if (generateLinkError) {
-						console.error('Error generating password reset link:', JSON.stringify(generateLinkError));
-						// Even if link generation fails, we proceed with scout creation, but log the error.
+					if (resetPasswordError) {
+						console.error('Error sending password reset email:', JSON.stringify(resetPasswordError));
+						// Even if email sending fails, we proceed with scout creation, but log the error.
+					} else {
+						console.log('Password reset email requested from Supabase for user.');
 					}
-
-					// The magiclink type sends an email with the link directly from Supabase
-					console.log('Password reset link generated and sent to user via email.');
 
 					response = handleCors(new Response(JSON.stringify({ message: 'Scout added successfully!' }), { status: 201, headers: { 'Content-Type': 'application/json' } }));
 				} catch (e) {

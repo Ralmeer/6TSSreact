@@ -2,11 +2,7 @@ import { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { TextInput, Button, Paper, Title, Text, Container } from '@mantine/core';
 import { useForm } from '@mantine/form';
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+import { supabase } from './supabaseClient';
 
 function ChangeEmailPage() {
   const [message, setMessage] = useState('');
