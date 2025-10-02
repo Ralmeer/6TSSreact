@@ -250,25 +250,70 @@ export default {
 					}
 				}
 			} else if (url.pathname === '/api/auth/forgot-password' && request.method === 'POST') {
+				console.log('Handling forgot-password POST request');
+				console.log('Request URL:', url.toString());
+				console.log('Request method:', request.method);
+				console.log('Request headers:', Object.fromEntries(request.headers.entries()));
+
 				try {
-					const { email } = await request.json();
-					console.log('Received forgot password request for email:', email);
+					const requestBody = await request.text();
+					console.log('Raw request body:', requestBody);
+					
+					const { email } = JSON.parse(requestBody);
+					console.log('Parsed email from request:', email);
 
 					const cleanedFrontendUrl = env.FRONTEND_URL.endsWith('/') ? env.FRONTEND_URL.slice(0, -1) : env.FRONTEND_URL;
-					const { error: generateLinkError } = await supabaseAdmin.auth.resetPasswordForEmail(email, {
+					console.log('Cleaned frontend URL:', cleanedFrontendUrl);
+					console.log('Full redirect URL:', `${env.FRONTEND_URL}/update-password`);
+
+					console.log('Attempting to reset password for email:', email);
+					const resetResult = await supabaseAdmin.auth.resetPasswordForEmail(email, {
 						redirectTo: `${env.FRONTEND_URL}/update-password`,
 					});
+					console.log('Reset password result:', resetResult);
 
-					if (generateLinkError) {
-						console.error('Error sending password reset email via worker:', JSON.stringify(generateLinkError));
-						response = handleCors(new Response(JSON.stringify({ error: generateLinkError.message }), { status: 500, headers: { 'Content-Type': 'application/json' } }));
+					if (resetResult.error) {
+						console.error('Error details:', {
+							name: resetResult.error.name,
+							message: resetResult.error.message,
+							stack: resetResult.error.stack
+						});
+						response = new Response(JSON.stringify({ error: resetResult.error.message }), { 
+							status: 500, 
+							headers: { 'Content-Type': 'application/json' }
+						});
 					} else {
-						console.log('Password reset email successfully requested via worker for:', email);
-						response = handleCors(new Response(JSON.stringify({ message: 'Password reset email sent.' }), { status: 200, headers: { 'Content-Type': 'application/json' } }));
+						console.log('Password reset email sent successfully');
+						response = new Response(JSON.stringify({ message: 'Password reset email sent.' }), { 
+							status: 200, 
+							headers: { 'Content-Type': 'application/json' }
+						});
 					}
+
+					// Log the response before CORS handling
+					console.log('Response before CORS:', {
+						status: response.status,
+						headers: Object.fromEntries(response.headers.entries()),
+					});
+
+					response = handleCors(response);
+
+					// Log the response after CORS handling
+					console.log('Final response after CORS:', {
+						status: response.status,
+						headers: Object.fromEntries(response.headers.entries()),
+					});
+
 				} catch (e: any) {
-					console.error('Unhandled error in forgot-password endpoint:', e);
-					response = handleCors(new Response(JSON.stringify({ error: `Internal server error: ${e.message || e}` }), { status: 500, headers: { 'Content-Type': 'application/json' } }));
+					console.error('Error details:', {
+						name: e.name,
+						message: e.message,
+						stack: e.stack
+					});
+					response = handleCors(new Response(JSON.stringify({ error: `Internal server error: ${e.message || e}` }), { 
+						status: 500, 
+						headers: { 'Content-Type': 'application/json' }
+					}));
 				}
 			} else {
 				switch (url.pathname) {

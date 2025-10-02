@@ -17,7 +17,8 @@ const ForgotPasswordPage = () => {
     setMessage(null);
 
     try {
-      const response = await fetch('/api/auth/forgot-password', {
+      const workerUrl = import.meta.env.VITE_API_URL; // Corrected to use VITE_API_URL
+      const response = await fetch(`${workerUrl}/api/auth/forgot-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,9 +31,7 @@ const ForgotPasswordPage = () => {
         throw new Error(errorData.message || 'Failed to send password reset email.');
       }
 
-      if (error) {
-        throw new Error(error.message);
-      }
+
 
       setMessage('Password reset email sent. Check your inbox!');
     } catch (error) {
