@@ -22,13 +22,16 @@ const ForgotPasswordPage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-       body: JSON.stringify({ email }),
+        body: JSON.stringify({ email }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to send password reset email.');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to send password reset email.');
+      }
+
+      if (error) {
+        throw new Error(error.message);
       }
 
       setMessage('Password reset email sent. Check your inbox!');
