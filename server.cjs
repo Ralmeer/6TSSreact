@@ -87,7 +87,7 @@ app.post('/api/invite-user', async (req, res) => {
     // Generate a password recovery link
     console.log('Attempting to generate password recovery link for email:', email); // Add this line
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: 'http://localhost:5173/update-password',
+        redirectTo: 'https://tobattendance.pages.dev/update-password',
       });
 
     if (error) {

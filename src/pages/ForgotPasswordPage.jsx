@@ -12,21 +12,29 @@ const ForgotPasswordPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError(null);
     setMessage(null);
-    setLoading(true);
 
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: 'http://localhost:5173/update-password',
+      const response = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
       });
 
-      if (error) throw error;
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send password reset email.');
+      }
 
       setMessage('Password reset email sent. Check your inbox!');
-    } catch (err) {
-      setError(err.message);
-      console.error('Error sending password reset email:', err.message);
+    } catch (error) {
+      console.error('Error sending password reset email:', error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
