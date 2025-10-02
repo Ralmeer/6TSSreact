@@ -256,7 +256,7 @@ export default {
 
 					const cleanedFrontendUrl = env.FRONTEND_URL.endsWith('/') ? env.FRONTEND_URL.slice(0, -1) : env.FRONTEND_URL;
 					const { error: generateLinkError } = await supabaseAdmin.auth.resetPasswordForEmail(email, {
-						redirectTo: `${cleanedFrontendUrl}/update-password`,
+						redirectTo: `${env.FRONTEND_URL}/update-password`,
 					});
 
 					if (generateLinkError) {
